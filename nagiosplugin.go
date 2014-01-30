@@ -23,10 +23,10 @@ func Exit(status Status, message string) {
 	os.Exit(int(status))
 }
 
-// Represents the state of a Nagios check. 
+// Represents the state of a Nagios check.
 type Check struct {
 	results []Result
-	status Status
+	status  Status
 }
 
 // Report a check result. This will not terminate the check. If status
@@ -42,6 +42,11 @@ func (c Check) AddResult(status Status, message string) {
 	}
 }
 
+// Return the most important result text, formatted for the first line
+// of plugin output.
+//
+// Returns joined string of (MessageSeparator-separated) info text from
+// results which have a status of at least c.status.
 func (c Check) exitInfoText() string {
 	importantMessages := make([]string, 0)
 	for _, result := range c.results {
@@ -52,10 +57,13 @@ func (c Check) exitInfoText() string {
 	return strings.Join(importantMessages, MessageSeparator)
 }
 
+// String representation of the check results, suitable for output and
+// parsing by Nagios.
 func (c Check) String() string {
 	return fmt.Sprintf("%v: %s", c.status, c.exitInfoText())
 }
 
+// End the check, print its output, and exit with the correct status.
 func (c Check) Finish() {
 	fmt.Println(c)
 	os.Exit(int(c.status))

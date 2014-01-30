@@ -3,6 +3,7 @@ package nagiosplugin
 // Nagios plugin exit status.
 type Status uint
 
+// The usual mapping from 0-3.
 const (
 	OK Status = iota
 	WARNING
@@ -11,7 +12,7 @@ const (
 )
 
 // Returns string representation of a Status. Panics if given an invalid
-// status. 
+// status.
 func (s Status) String() string {
 	switch s {
 	case OK:
@@ -26,8 +27,11 @@ func (s Status) String() string {
 	panic("Invalid nagiosplugin.Status.")
 }
 
+// A Result is a combination of a Status and infotext. A check can have
+// multiple of these, and only the most important (greatest badness)
+// will be reported on the first line of output or represented in the
+// plugin's exit status.
 type Result struct {
-	status Status
+	status  Status
 	message string
 }
-
