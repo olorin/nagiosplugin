@@ -23,9 +23,9 @@ type Check struct {
 	status  Status
 }
 
-// Report a check result. This will not terminate the check. If status
-// is the highest yet reported, this will update the check's final
-// return status.
+// AddResult adds a check result. This will not terminate the check. If
+// status is the highest yet reported, this will update the check's
+// final return status.
 func (c Check) AddResult(status Status, message string) {
 	var result Result
 	result.status = status
@@ -36,8 +36,8 @@ func (c Check) AddResult(status Status, message string) {
 	}
 }
 
-// Return the most important result text, formatted for the first line
-// of plugin output.
+// exitInfoText returns the most important result text, formatted for
+// the first line of plugin output.
 //
 // Returns joined string of (MessageSeparator-separated) info text from
 // results which have a status of at least c.status.
@@ -57,7 +57,8 @@ func (c Check) String() string {
 	return fmt.Sprintf("%v: %s", c.status, c.exitInfoText())
 }
 
-// End the check, print its output, and exit with the correct status.
+// Finish ends the check, prints its output (to stdout), and exits with
+// the correct status.
 func (c Check) Finish() {
 	fmt.Println(c)
 	os.Exit(int(c.status))

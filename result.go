@@ -27,7 +27,7 @@ func (s Status) String() string {
 	panic("Invalid nagiosplugin.Status.")
 }
 
-// A Result is a combination of a Status and infotext. A check can have
+// Result is a combination of a Status and infotext. A check can have
 // multiple of these, and only the most important (greatest badness)
 // will be reported on the first line of output or represented in the
 // plugin's exit status.
