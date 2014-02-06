@@ -20,6 +20,7 @@ func Exit(status Status, message string) {
 // Represents the state of a Nagios check.
 type Check struct {
 	results []Result
+	perfdata []PerfDatum
 	status  Status
 }
 
@@ -34,6 +35,26 @@ func (c Check) AddResult(status Status, message string) {
 	if result.status > c.status {
 		c.status = result.status
 	}
+}
+
+// AddPerfDatum adds a metric to the set output by the check. unit must
+// be a valid Nagios unit of measurement (UOM): "us", "ms", "s",
+// "%", "b", "kb", "mb", "gb", "tb", "c", or the empty string. Zero or
+// more of the thresholds min, max, warn and crit may be supplied; these
+// must be of the same UOM as the value.
+//
+// A threshold may be positive or negative infinity, in which case it
+// will be omitted in the check output. A value may not be either
+// infinity. 
+//
+// Returns error on invalid parameters.
+func (c Check) AddPerfDatum(label, unit string, value float64, thresholds ...float64) error {
+	datum, err := NewPerfDatum(label, unit, value, thresholds...)
+	if err != nil {
+		return err
+	}
+	c.perfdata = append(c.perfdata, *datum)
+	return nil
 }
 
 // exitInfoText returns the most important result text, formatted for
