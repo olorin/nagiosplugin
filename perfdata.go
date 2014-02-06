@@ -43,6 +43,9 @@ func NewPerfDatum(label string, unit string, value float64, thresholds ...float6
 	if !validUnit(unit) {
 		return nil, fmt.Errorf("Invalid unit %v", unit)
 	}
+	if math.IsInf(value, 0) || math.IsNaN(value) {
+		return nil, fmt.Errorf("Perfdata value may not be infinity or NaN: %v.", value)
+	}
 	if len(thresholds) >= 1 {
 		datum.min = &thresholds[0]
 	}

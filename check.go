@@ -39,9 +39,11 @@ func (c Check) AddResult(status Status, message string) {
 
 // AddPerfDatum adds a metric to the set output by the check. unit must
 // be a valid Nagios unit of measurement (UOM): "us", "ms", "s",
-// "%", "b", "kb", "mb", "gb", "tb", "c", or the empty string. Zero or
-// more of the thresholds min, max, warn and crit may be supplied; these
-// must be of the same UOM as the value.
+// "%", "b", "kb", "mb", "gb", "tb", "c", or the empty string. UOMs are
+// not case-sensitive.
+//
+// Zero or more of the thresholds min, max, warn and crit may be
+// supplied; these must be of the same UOM as the value.
 //
 // A threshold may be positive or negative infinity, in which case it
 // will be omitted in the check output. A value may not be either
