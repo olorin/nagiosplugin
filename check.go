@@ -19,9 +19,9 @@ func Exit(status Status, message string) {
 
 // Represents the state of a Nagios check.
 type Check struct {
-	results []Result
+	results  []Result
 	perfdata []PerfDatum
-	status  Status
+	status   Status
 }
 
 // AddResult adds a check result. This will not terminate the check. If
@@ -47,7 +47,7 @@ func (c Check) AddResult(status Status, message string) {
 //
 // A threshold may be positive or negative infinity, in which case it
 // will be omitted in the check output. A value may not be either
-// infinity. 
+// infinity.
 //
 // Returns error on invalid parameters.
 func (c Check) AddPerfDatum(label, unit string, value float64, thresholds ...float64) error {

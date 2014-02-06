@@ -1,8 +1,8 @@
 package nagiosplugin
 
 import (
-	"testing"
 	"math"
+	"testing"
 )
 
 func TestPerfdata(t *testing.T) {

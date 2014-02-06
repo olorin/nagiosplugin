@@ -1,21 +1,21 @@
 package nagiosplugin
 
 import (
-	"strings"
 	"fmt"
 	"math"
+	"strings"
 )
 
 // PerfDatum represents one metric to be reported as part of a check
-// result. 
+// result.
 type PerfDatum struct {
 	label string
 	value float64
-	unit string
-	min *float64
-	max *float64
-	warn *float64
-	crit *float64
+	unit  string
+	min   *float64
+	max   *float64
+	warn  *float64
+	crit  *float64
 }
 
 // validUnit returns true if the string is a valid UOM; otherwise false.
@@ -30,11 +30,11 @@ func validUnit(unit string) bool {
 
 // NewPerfDatum returns a PerfDatum object suitable to use in a check
 // result. unit must a valid Nagios unit, i.e., one of "us", "ms", "s",
-// "%", "b", "kb", "mb", "gb", "tb", "c", or the empty string. 
+// "%", "b", "kb", "mb", "gb", "tb", "c", or the empty string.
 //
 // Zero to four thresholds may be supplied: min, max, warn and crit.
 // Thresholds may be positive or negative infinity, in which case they
-// will be omitted in check output. 
+// will be omitted in check output.
 func NewPerfDatum(label string, unit string, value float64, thresholds ...float64) (*PerfDatum, error) {
 	datum := new(PerfDatum)
 	datum.label = label
@@ -75,7 +75,7 @@ func isThresholdSet(t *float64) bool {
 }
 
 // fmtThreshold returns a string representation of min, max, warn or
-// crit (whether or not they are set). 
+// crit (whether or not they are set).
 func fmtThreshold(t *float64) string {
 	if !isThresholdSet(t) {
 		return ""
@@ -84,7 +84,7 @@ func fmtThreshold(t *float64) string {
 }
 
 // String returns the string representation of a PerfDatum, suitable for
-// check output. 
+// check output.
 func (p PerfDatum) String() string {
 	value := fmt.Sprintf("%s=%f%s", p.label, p.value, p.unit)
 	value += fmt.Sprintf(";%s;%s", fmtThreshold(p.warn), fmtThreshold(p.crit))
