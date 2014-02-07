@@ -1,4 +1,4 @@
-lanugage: go
+language: go
 
 go:
   - 1.2
