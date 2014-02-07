@@ -77,7 +77,9 @@ func (c Check) exitInfoText() string {
 // String representation of the check results, suitable for output and
 // parsing by Nagios.
 func (c Check) String() string {
-	return fmt.Sprintf("%v: %s", c.status, c.exitInfoText())
+	value := fmt.Sprintf("%v: %s", c.status, c.exitInfoText())
+	value += RenderPerfdata(c.perfdata)
+	return value
 }
 
 // Finish ends the check, prints its output (to stdout), and exits with

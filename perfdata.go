@@ -91,3 +91,19 @@ func (p PerfDatum) String() string {
 	value += fmt.Sprintf(";%s;%s", fmtThreshold(p.min), fmtThreshold(p.max))
 	return value
 }
+
+// RenderPerfdata accepts a slice of PerfDatum objects and returns their
+// concatenated string representations in a form suitable to append to
+// the first line of check output.
+func RenderPerfdata(perfdata []PerfDatum) string {
+	value := ""
+	if len(perfdata) == 0 {
+		return value
+	}
+	// Demarcate start of perfdata in check output.
+	value += " |"
+	for _, datum := range perfdata {
+		value += fmt.Sprintf(" %v", datum)
+	}
+	return value
+}
