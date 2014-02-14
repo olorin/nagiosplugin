@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"strings"
+	"strconv"
 )
 
 // PerfDatum represents one metric to be reported as part of a check
@@ -16,6 +17,14 @@ type PerfDatum struct {
 	max   *float64
 	warn  *float64
 	crit  *float64
+}
+
+// fmtPerfFloat returns a string representation of n formatted in the
+// typical /\d+(\.\d+)/ pattern. The difference from %f is that it
+// removes any trailing zeroes (like %g except it never returns
+// values in scientific notation). 
+func fmtPerfFloat(n float64) string {
+	return strconv.FormatFloat(n, 'f', -1, 64)
 }
 
 // validUnit returns true if the string is a valid UOM; otherwise false.
@@ -80,13 +89,14 @@ func fmtThreshold(t *float64) string {
 	if !isThresholdSet(t) {
 		return ""
 	}
-	return fmt.Sprintf("%f", *t)
+	return fmtPerfFloat(*t)
 }
 
 // String returns the string representation of a PerfDatum, suitable for
 // check output.
 func (p PerfDatum) String() string {
-	value := fmt.Sprintf("%s=%f%s", p.label, p.value, p.unit)
+	val := fmtPerfFloat(p.value)
+	value := fmt.Sprintf("%s=%s%s", p.label, val, p.unit)
 	value += fmt.Sprintf(";%s;%s", fmtThreshold(p.warn), fmtThreshold(p.crit))
 	value += fmt.Sprintf(";%s;%s", fmtThreshold(p.min), fmtThreshold(p.max))
 	return value
