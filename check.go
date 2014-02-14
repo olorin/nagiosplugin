@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	MessageSeparator = ", "
+	messageSeparator = ", "
 )
 
 // Standalone Exit function for simple checks without multiple results
@@ -68,7 +68,7 @@ func (c *Check) AddPerfDatum(label, unit string, value float64, thresholds ...fl
 // exitInfoText returns the most important result text, formatted for
 // the first line of plugin output.
 //
-// Returns joined string of (MessageSeparator-separated) info text from
+// Returns joined string of (messageSeparator-separated) info text from
 // results which have a status of at least c.status.
 func (c Check) exitInfoText() string {
 	importantMessages := make([]string, 0)
@@ -77,7 +77,7 @@ func (c Check) exitInfoText() string {
 			importantMessages = append(importantMessages, result.message)
 		}
 	}
-	return strings.Join(importantMessages, MessageSeparator)
+	return strings.Join(importantMessages, messageSeparator)
 }
 
 // String representation of the check results, suitable for output and
