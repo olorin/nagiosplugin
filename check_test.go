@@ -7,18 +7,9 @@ import (
 	"time"
 )
 
-func TestDefaultCheck(t *testing.T) {
-	c := NewDefaultCheck()
-	expected := "UNKNOWN: No check results specified"
-	result := c.String()
-	if expected != result {
-		t.Errorf("Expected check output %v, got check output %v", expected, result)
-	}
-}
-
 func TestCheck(t *testing.T) {
 	rand.Seed(time.Now().UTC().UnixNano())
-	c := NewCheck(OK, "everything looks shiny from here, cap'n")
+	c := NewCheck()
 	expected := "CRITICAL: 200000 terrifying space monkeys in the engineroom | space_monkeys=200000c;10000;100000;0;4294967296"
 	nSpaceMonkeys := float64(200000)
 	maxSpaceMonkeys := float64(1 << 32)

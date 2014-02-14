@@ -24,18 +24,9 @@ type Check struct {
 	status   Status
 }
 
-// NewCheck returns a Check object initialized with the given result
-// (status and message). 
-func NewCheck(status Status, message string) *Check {
+// NewCheck returns an empty Check object.
+func NewCheck() *Check {
 	c := new(Check)
-	c.AddResult(status, message)
-	return c
-}
-
-// NewDefaultCheck returns a Check object initialized with a placeholder
-// UNKNOWN result.
-func NewDefaultCheck() *Check {
-	c := NewCheck(UNKNOWN, "No check results specified")
 	return c
 }
 
@@ -100,6 +91,9 @@ func (c Check) String() string {
 // Finish ends the check, prints its output (to stdout), and exits with
 // the correct status.
 func (c Check) Finish() {
+	if len(c.results) == 0 {
+		c.AddResult(UNKNOWN, "no check result specified")
+	}
 	fmt.Println(c)
 	os.Exit(int(c.status))
 }
