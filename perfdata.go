@@ -3,8 +3,8 @@ package nagiosplugin
 import (
 	"fmt"
 	"math"
-	"strings"
 	"strconv"
+	"strings"
 )
 
 // PerfDatum represents one metric to be reported as part of a check
@@ -22,7 +22,7 @@ type PerfDatum struct {
 // fmtPerfFloat returns a string representation of n formatted in the
 // typical /\d+(\.\d+)/ pattern. The difference from %f is that it
 // removes any trailing zeroes (like %g except it never returns
-// values in scientific notation). 
+// values in scientific notation).
 func fmtPerfFloat(n float64) string {
 	return strconv.FormatFloat(n, 'f', -1, 64)
 }
@@ -43,7 +43,7 @@ func validUnit(unit string) bool {
 //
 // Zero to four thresholds may be supplied: min, max, warn and crit.
 // Thresholds may be positive infinity, negative infinity, or NaN in
-// which case they will be omitted in check output. 
+// which case they will be omitted in check output.
 func NewPerfDatum(label string, unit string, value float64, thresholds ...float64) (*PerfDatum, error) {
 	datum := new(PerfDatum)
 	datum.label = label

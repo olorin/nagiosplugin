@@ -20,7 +20,7 @@ func TestRenderPerfdata(t *testing.T) {
 	expected := " | goodness=3.141592653589793kb;;;3;34.55751918948773 goodness=6.283185307179586kb;;;3;34.55751918948773 goodness=9.42477796076938kb;;;3;34.55751918948773 goodness=12.566370614359172kb;;;3;34.55751918948773 goodness=15.707963267948966kb;;;3;34.55751918948773 goodness=18.84955592153876kb;;;3;34.55751918948773 goodness=21.991148575128552kb;;;3;34.55751918948773 goodness=25.132741228718345kb;;;3;34.55751918948773 goodness=28.274333882308138kb;;;3;34.55751918948773 goodness=31.41592653589793kb;;;3;34.55751918948773"
 	pd := make([]PerfDatum, 0)
 	for i := 0; i < 10; i++ {
-		datum, err := NewPerfDatum("goodness", "kb", math.Pi * float64(i+1), 3.0, math.Pi * 11)
+		datum, err := NewPerfDatum("goodness", "kb", math.Pi*float64(i+1), 3.0, math.Pi*11)
 		if err != nil {
 			t.Errorf("Could not create perfdata: %v", err)
 		}
