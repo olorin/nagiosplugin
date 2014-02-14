@@ -24,10 +24,25 @@ type Check struct {
 	status   Status
 }
 
+// NewCheck returns a Check object initialized with the given result
+// (status and message). 
+func NewCheck(status Status, message string) *Check {
+	c := new(Check)
+	c.AddResult(status, message)
+	return c
+}
+
+// NewDefaultCheck returns a Check object initialized with a placeholder
+// UNKNOWN result.
+func NewDefaultCheck() *Check {
+	c := NewCheck(UNKNOWN, "No check results specified")
+	return c
+}
+
 // AddResult adds a check result. This will not terminate the check. If
 // status is the highest yet reported, this will update the check's
 // final return status.
-func (c Check) AddResult(status Status, message string) {
+func (c *Check) AddResult(status Status, message string) {
 	var result Result
 	result.status = status
 	result.message = message
@@ -50,7 +65,7 @@ func (c Check) AddResult(status Status, message string) {
 // infinity.
 //
 // Returns error on invalid parameters.
-func (c Check) AddPerfDatum(label, unit string, value float64, thresholds ...float64) error {
+func (c *Check) AddPerfDatum(label, unit string, value float64, thresholds ...float64) error {
 	datum, err := NewPerfDatum(label, unit, value, thresholds...)
 	if err != nil {
 		return err
@@ -67,7 +82,7 @@ func (c Check) AddPerfDatum(label, unit string, value float64, thresholds ...flo
 func (c Check) exitInfoText() string {
 	importantMessages := make([]string, 0)
 	for _, result := range c.results {
-		if result.status >= c.status {
+		if result.status == c.status {
 			importantMessages = append(importantMessages, result.message)
 		}
 	}
