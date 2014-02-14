@@ -111,3 +111,9 @@ func (c *Check) Exitf(status Status, format string, v ...interface{}) {
 	c.AddResult(status, info)
 	c.Finish()
 }
+
+// Criticalf is a shorthand function which calls Exitf with
+// nagiosplugin.CRITICAL and the supplied format string.
+func (c *Check) Criticalf(format string, v ...interface{}) {
+	c.Exitf(CRITICAL, format, v...)
+}
