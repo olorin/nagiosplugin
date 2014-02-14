@@ -104,7 +104,7 @@ func (c Check) Finish() {
 	os.Exit(int(c.status))
 }
 
-// ExitWith takes a status plus a format string, and a list of
+// Exitf takes a status plus a format string, and a list of
 // parameters to pass to Sprintf. It then immediately outputs and exits. 
 func (c *Check) Exitf(status Status, format string, v ...interface{}) {
 	info := fmt.Sprintf(format, v...)
