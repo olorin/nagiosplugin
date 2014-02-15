@@ -3,19 +3,19 @@ nagiosplugin
 
 Package for writing Nagios/Icinga/et cetera plugins in Go (golang).
 
-documentation
+Documentation
 =============
 
 See http://godoc.org/github.com/fractalcat/nagiosplugin. 
 
-usage example
+Usage example
 =============
 
 The general usage pattern looks like this:
 
 	func main() {
 		// Initialize the check - this will return an UNKNOWN result
-		// until more perfdata are added.
+		// until more results are added.
 		check := nagiosplugin.NewCheck()
 		// If we exit early or panic() we'll still output a result.
 		defer check.Finish()
