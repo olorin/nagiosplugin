@@ -25,7 +25,8 @@ The general usage pattern looks like this:
 		// Add an 'OK' result - if no 'worse' check results have been
 		// added, this is the one that will be output.
 		check.AddResult(nagiosplugin.OK, "everything looks shiny, cap'n")
-		// Add some perfdata too (label, unit, min, max, warn, crit).
-		// The math.Inf(1) will be parsed as 'no maximum'. 
-		check.AddPerfDatum("badness", "kb", 0.0, math.Inf(1), 8000.0, 9000.0)
+		// Add some perfdata too (label, unit, value, min, max,
+		// warn, crit). The math.Inf(1) will be parsed as 'no
+		// maximum'. 
+		check.AddPerfDatum("badness", "kb", 3.14159, 0.0, math.Inf(1), 8000.0, 9000.0)
 	}
