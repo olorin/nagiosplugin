@@ -90,7 +90,7 @@ func (c Check) String() string {
 
 // Finish ends the check, prints its output (to stdout), and exits with
 // the correct status.
-func (c Check) Finish() {
+func (c *Check) Finish() {
 	if len(c.results) == 0 {
 		c.AddResult(UNKNOWN, "no check result specified")
 	}
