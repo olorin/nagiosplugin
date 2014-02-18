@@ -20,10 +20,10 @@ func Example() {
 	// Our check is testing the internal consistency of the
 	// universe.
 	value := math.Pi
-	// We add a counter metric with a minimum of zero, an unbounded
-	// maximum, a warning threshold of 4000.0 and a critical
-	// threshold of 9000.0 (for graphing purposes).
-	check.AddPerfDatum("badness", "c", value, 0.0, math.Inf(1), 4000.0, 9000.0)
+	// We add a dimensionless metric with a minimum of zero, an
+	// unbounded maximum, a warning threshold of 4000.0 and a
+	// critical threshold of 9000.0 (for graphing purposes). 
+	check.AddPerfDatum("badness", "", value, 0.0, math.Inf(1), 4000.0, 9000.0)
 	// Add an OK check result as the universe appears sane.
 	check.AddResult(nagiosplugin.OK, "Everything looks shiny from here, cap'n")
 	// We potentially perform more checks and add more results here;
@@ -31,5 +31,5 @@ func Example() {
 	// returned (in order OK, WARNING, CRITICAL, UNKNOWN).
 
 	// Output:
-	// OK: Everything looks shiny from here, cap'n | badness=3.141592653589793c;4000;9000;0;
+	// OK: Everything looks shiny from here, cap'n | badness=3.141592653589793;4000;9000;0;
 }
