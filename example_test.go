@@ -31,5 +31,5 @@ func Example() {
 	// returned (in order OK, WARNING, CRITICAL, UNKNOWN).
 
 	// Output:
-	// OK: Everything looks shiny from here, cap'n
+	// OK: Everything looks shiny from here, cap'n | badness=3.141592653589793c;4000;9000;0;
 }
