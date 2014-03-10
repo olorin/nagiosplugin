@@ -43,6 +43,13 @@ func (c *Check) AddResult(status Status, message string) {
 	}
 }
 
+// AddResultf functions as AddResult, but takes a printf-style format
+// string and arguments.
+func (c *Check) AddResultf(status Status, format string, v ...interface{}) {
+	msg := fmt.Sprintf(format, v...)
+	c.AddResult(status, msg)
+}
+
 // AddPerfDatum adds a metric to the set output by the check. unit must
 // be a valid Nagios unit of measurement (UOM): "us", "ms", "s",
 // "%", "b", "kb", "mb", "gb", "tb", "c", or the empty string. UOMs are
