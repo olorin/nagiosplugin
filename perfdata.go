@@ -42,7 +42,7 @@ func validUnit(unit string) bool {
 // "%", "b", "kb", "mb", "gb", "tb", "c", or the empty string.
 //
 // Zero to four thresholds may be supplied: min, max, warn and crit.
-// Thresholds may be positive infinity, negative infinity, or NaN in
+// Thresholds may be positive infinity, negative infinity, or NaN, in
 // which case they will be omitted in check output.
 func NewPerfDatum(label string, unit string, value float64, thresholds ...float64) (*PerfDatum, error) {
 	datum := new(PerfDatum)
@@ -72,7 +72,7 @@ func NewPerfDatum(label string, unit string, value float64, thresholds ...float6
 
 // isThresholdSet returns true if one of min, max, warn or crit are set
 // and false otherwise. They are determined to be 'set' if they are not
-// a) the nil pointer, b) (either) infinity or c) NaN.
+// a) the nil pointer, b) infinity (positive or negative) or c) NaN.
 func isThresholdSet(t *float64) bool {
 	switch {
 	case t == nil:
