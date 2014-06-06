@@ -12,7 +12,7 @@ const (
 )
 
 // Returns string representation of a Status. Panics if given an invalid
-// status.
+// status (this will be recovered in check.Finish if it has been deferred). 
 func (s Status) String() string {
 	switch s {
 	case OK:
