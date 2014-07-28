@@ -28,7 +28,7 @@ func Example() {
 	check.AddResult(nagiosplugin.OK, "Everything looks shiny from here, cap'n")
 	// We potentially perform more checks and add more results here;
 	// if there's more than one, the highest result will be the one
-	// returned (in order OK, WARNING, CRITICAL, UNKNOWN).
+	// returned (in descending order OK, WARNING, CRITICAL, UNKNOWN).
 
 	// Output:
 	// OK: Everything looks shiny from here, cap'n | badness=3.141592653589793;4000;9000;0;
