@@ -29,4 +29,14 @@ The general usage pattern looks like this:
 		// warn, crit). The math.Inf(1) will be parsed as 'no
 		// maximum'. 
 		check.AddPerfDatum("badness", "kb", 3.14159, 0.0, math.Inf(1), 8000.0, 9000.0)
+
+		// Parse an range from the command line and the more severe
+		// results if they match
+		warnRange, err := nagiosplugin.ParseRange( "1:2" )
+		if err != nil {
+		  check.AddResult(nagiosplugin.UNKNOWN, "error parsing warning range")
+		}
+		if warnRange.Check( 3.14159 ) {
+		  check.AddResult(nagiosplugin.WARNING, "You'r boat is leaky, cap'n")
+		}
 	}
