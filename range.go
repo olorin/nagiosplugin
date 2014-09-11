@@ -68,7 +68,7 @@ func ParseRange(rangeStr string) (*Range, error) {
 	return t, nil
 }
 
-// Returs true if an alert should be raised based on the range
+// Returns true if an alert should be raised based on the range.
 func (r *Range) Check(value float64) bool {
 	var no bool = false
 	var yes bool = true
@@ -87,13 +87,13 @@ func (r *Range) Check(value float64) bool {
 }
 
 // CheckInt is a convenience method which does an unchecked type
-// conversion from an int to a float64
+// conversion from an int to a float64.
 func (r *Range) CheckInt(val int) bool {
 	return r.Check(float64(val))
 }
 
 // CheckUint64 is a convenience method which does an unchecked type
-// conversion from an uint64 to a float64
+// conversion from an uint64 to a float64.
 func (r *Range) CheckUint64(val uint64) bool {
 	return r.Check(float64(val))
 }
