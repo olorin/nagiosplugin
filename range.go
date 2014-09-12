@@ -82,7 +82,7 @@ func (r *Range) Check(value float64) bool {
 		no = true
 		yes = false
 	}
-	// see https://www.monitoring-plugins.org/doc/guidelines.html#THRESHOLDFORMAT
+	// Ranges are treated as a closed interval.
 	if r.Start <= value && value <= r.End {
 		return no
 	} else {
