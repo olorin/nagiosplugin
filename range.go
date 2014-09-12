@@ -9,23 +9,26 @@ import (
 )
 
 // Range is a combination of a lower boundary, an upper boundary
-// and a flag for inverted (@) range semantics.
+// and a flag for inverted (@) range semantics. See [0] for more
+// details.
+//
+// [0]: https://nagios-plugins.org/doc/guidelines.html#THRESHOLDFORMAT
 type Range struct {
 	Start         float64
 	End           float64
 	AlertOnInside bool
 }
 
-// Returns a new range object and nil if the given
-// range definition was valid or nil and an error.
+// Returns a new range object and nil if the given range definition was
+// valid, or nil and an error if it was invalid.
 func ParseRange(rangeStr string) (*Range, error) {
-	// Set Defaults
+	// Set defaults
 	t := &Range{
 		Start:         0,
 		End:           math.Inf(1),
 		AlertOnInside: false,
 	}
-	// Remove leading and trailing whitespaces
+	// Remove leading and trailing whitespace
 	rangeStr = strings.Trim(rangeStr, " \n\r")
 
 	// Check for inverted semantics
@@ -34,7 +37,7 @@ func ParseRange(rangeStr string) (*Range, error) {
 		rangeStr = rangeStr[1:]
 	}
 
-	// parse lower limit
+	// Parse lower limit
 	endPos := strings.Index(rangeStr, ":")
 	if endPos > -1 {
 		if rangeStr[0] == '~' {
@@ -50,7 +53,7 @@ func ParseRange(rangeStr string) (*Range, error) {
 		rangeStr = rangeStr[endPos+1:]
 	}
 
-	// parse upper limit
+	// Parse upper limit
 	if len(rangeStr) > 0 {
 		max, err := strconv.ParseFloat(rangeStr, 64)
 		if err != nil {
@@ -68,7 +71,9 @@ func ParseRange(rangeStr string) (*Range, error) {
 	return t, nil
 }
 
-// Returns true if an alert should be raised based on the range.
+// Returns true if an alert should be raised based on the range (if the
+// value is outside the range for normal semantics, or if the value is
+// inside the range for inverted semantics ('@-semantics')).
 func (r *Range) Check(value float64) bool {
 	var no bool = false
 	var yes bool = true
