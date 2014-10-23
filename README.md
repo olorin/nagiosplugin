@@ -34,9 +34,9 @@ The general usage pattern looks like this:
 		// results if they match.
 		warnRange, err := nagiosplugin.ParseRange( "1:2" )
 		if err != nil {
-		  check.AddResult(nagiosplugin.UNKNOWN, "error parsing warning range")
+			check.AddResult(nagiosplugin.UNKNOWN, "error parsing warning range")
 		}
 		if warnRange.Check( 3.14159 ) {
-		  check.AddResult(nagiosplugin.WARNING, "Are we crashing again?")
+			check.AddResult(nagiosplugin.WARNING, "Are we crashing again?")
 		}
 	}
