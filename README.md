@@ -1,3 +1,5 @@
+[![Build status](https://travis-ci.org/fractalcat/nagiosplugin.svg?branch=master)](https://travis-ci.org/fractalcat/nagios-plugin)
+
 nagiosplugin
 ============
 
