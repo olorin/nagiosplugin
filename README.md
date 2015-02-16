@@ -1,17 +1,14 @@
 [![Build status](https://travis-ci.org/fractalcat/nagiosplugin.svg?branch=master)](https://travis-ci.org/fractalcat/nagios-plugin)
 
-nagiosplugin
-============
+# nagiosplugin
 
 Package for writing Nagios/Icinga/et cetera plugins in Go (golang).
 
-Documentation
-=============
+# Documentation
 
 See http://godoc.org/github.com/fractalcat/nagiosplugin. 
 
-Usage example
-=============
+# Usage example
 
 The general usage pattern looks like this:
 
@@ -44,3 +41,7 @@ func main() {
 	}
 }
 ```
+
+# Language version
+
+Requires go >= 1.0; tested with versions up to 1.4.
