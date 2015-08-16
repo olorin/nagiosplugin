@@ -1,4 +1,4 @@
-[![Build status](https://travis-ci.org/fractalcat/nagiosplugin.svg?branch=master)](https://travis-ci.org/fractalcat/nagios-plugin)
+[![Build status](https://travis-ci.org/fractalcat/nagiosplugin.svg?branch=master)](https://travis-ci.org/olorin/nagios-plugin)
 
 # nagiosplugin
 
@@ -6,7 +6,7 @@ Package for writing Nagios/Icinga/et cetera plugins in Go (golang).
 
 # Documentation
 
-See http://godoc.org/github.com/fractalcat/nagiosplugin. 
+See http://godoc.org/github.com/olorin/nagiosplugin. 
 
 # Usage example
 
