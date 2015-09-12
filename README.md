@@ -1,4 +1,4 @@
-[![Build status](https://travis-ci.org/fractalcat/nagiosplugin.svg?branch=master)](https://travis-ci.org/olorin/nagios-plugin)
+[![Build status](https://travis-ci.org/olorin/nagiosplugin.svg?branch=master)](https://travis-ci.org/olorin/nagios-plugin)
 
 # nagiosplugin
 

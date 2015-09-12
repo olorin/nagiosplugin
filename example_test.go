@@ -1,7 +1,7 @@
 package nagiosplugin_test
 
 import (
-	"github.com/fractalcat/nagiosplugin"
+	"github.com/olorin/nagiosplugin"
 	"math"
 )
 
