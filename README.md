@@ -44,4 +44,4 @@ func main() {
 
 # Language version
 
-Requires go >= 1.0; tested with versions up to 1.4.
+Requires go >= 1.0; tested with versions up to 1.5.
