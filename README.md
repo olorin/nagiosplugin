@@ -30,8 +30,7 @@ func main() {
 	// maximum'.
 	check.AddPerfDatum("badness", "kb", 3.14159, 0.0, math.Inf(1), 8000.0, 9000.0)
 
-	// Parse an range from the command line and the more severe
-	// results if they match.
+	// Parse a range from the command line and warn on a match.
 	warnRange, err := nagiosplugin.ParseRange( "1:2" )
 	if err != nil {
 		check.AddResult(nagiosplugin.UNKNOWN, "error parsing warning range")
