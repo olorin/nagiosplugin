@@ -45,10 +45,9 @@ func ParseRange(rangeStr string) (*Range, error) {
 		} else {
 			min, err := strconv.ParseFloat(rangeStr[0:endPos], 64)
 			if err != nil {
-				fmt.Println("failed to parse lower limit:", err)
-			} else {
-				t.Start = min
+				return nil, fmt.Errorf("failed to parse lower limit: %v", err)
 			}
+			t.Start = min
 		}
 		rangeStr = rangeStr[endPos+1:]
 	}
@@ -57,10 +56,9 @@ func ParseRange(rangeStr string) (*Range, error) {
 	if len(rangeStr) > 0 {
 		max, err := strconv.ParseFloat(rangeStr, 64)
 		if err != nil {
-			fmt.Println("failed to parse upper limit:", err)
-		} else {
-			t.End = max
+			return nil, fmt.Errorf("failed to parse upper limit: %v", err)
 		}
+		t.End = max
 	}
 
 	if t.End < t.Start {
