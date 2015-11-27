@@ -162,3 +162,20 @@ func TestNegInfRange(t *testing.T) {
 		}
 	}
 }
+
+// TestInvalidRanges ensures that ParseRange correctly fails on input
+// that is known to be invalid.
+func TestInvalidRanges(t *testing.T) {
+	var err error
+
+	badRanges := []string{
+		"20:10", // Violates min <= max
+		"10,20", // The comma is non-sensical
+	}
+	for _, rangeStr := range badRanges {
+		_, err = ParseRange(rangeStr)
+		if err == nil {
+			t.Errorf("ParseRange(%v) should have returned an error", rangeStr)
+		}
+	}
+}
