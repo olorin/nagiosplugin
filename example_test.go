@@ -30,6 +30,6 @@ func Example() {
 	// if there's more than one, the highest result will be the one
 	// returned (in ascending order OK, WARNING, CRITICAL, UNKNOWN).
 
-	// Output:
+	// This will print:
 	// OK: Everything looks shiny from here, cap'n | badness=3.141592653589793;4000;9000;0;
 }
