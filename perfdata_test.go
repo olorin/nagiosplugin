@@ -31,3 +31,26 @@ func TestRenderPerfdata(t *testing.T) {
 		t.Errorf("Perfdata rendering error: expected %s, got %v", expected, result)
 	}
 }
+
+func TestRenderPerfdataWithOmissions(t *testing.T) {
+	pd := make([]PerfDatum, 0)
+	datum, err := NewPerfDatum(
+		"age",       // label
+		"s",         // UOM
+		0.123,       // value
+		0.0,         // min
+		math.Inf(1), // max: +Inf -> omit
+		math.NaN(),  // warn: NaN -> omit
+		0.5)         // crit
+	if err != nil {
+		t.Errorf("Could not create perfdata: %v", err)
+	}
+	pd = append(pd, *datum)
+
+	// 'label'=value[UOM];[warn];[crit];[min];[max]
+	expected := " | age=0.123s;;0.5;0;"
+	result := RenderPerfdata(pd)
+	if result != expected {
+		t.Errorf("Perfdata rendering error: expected %s, got %v", expected, result)
+	}
+}
