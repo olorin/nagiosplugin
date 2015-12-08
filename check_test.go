@@ -3,6 +3,7 @@ package nagiosplugin
 import (
 	"fmt"
 	"math/rand"
+	"strings"
 	"testing"
 	"time"
 )
@@ -20,5 +21,51 @@ func TestCheck(t *testing.T) {
 	result := c.String()
 	if expected != result {
 		t.Errorf("Expected check output %v, got check output %v", expected, result)
+	}
+}
+
+// TestUnknownSupersedesOK ensures that when given multiple check
+// results, an UNKNOWN check result will always take priority over an OK
+// check result.
+func TestUnknownSupersedesOK(t *testing.T) {
+	c := NewCheck()
+	c.AddResult(OK, "Field experiment no. 5 fully operational")
+	c.AddResult(UNKNOWN, "No response from betaform amplifier")
+
+	expected := "UNKNOWN"
+	actual := strings.SplitN(c.String(), ":", 2)[0]
+	if actual != expected {
+		t.Errorf("Expected %v status, got %v", expected, actual)
+	}
+}
+
+// TestWarningSupersedesUnknown ensures that when given multiple check
+// results, a WARNING check result will always take priority over an
+// UNKNOWN check result.
+func TestWarningSupersedesUnknown(t *testing.T) {
+	c := NewCheck()
+	c.AddResult(WARNING, "Isolated-frame flux emission outside threshold")
+	c.AddResult(UNKNOWN, "No response from betaform amplifier")
+
+	expected := "WARNING"
+	actual := strings.SplitN(c.String(), ":", 2)[0]
+	if actual != expected {
+		t.Errorf("Expected %v status, got %v", expected, actual)
+	}
+}
+
+// TestCriticalSupersedesAll ensures that when given multiple check
+// results, a CRITICAL check result will always take priority over all
+// other check results.
+func TestCriticalSupersedesAll(t *testing.T) {
+	c := NewCheck()
+	c.AddResult(CRITICAL, "Baltovsky chamber is in meltdown")
+	c.AddResult(WARNING, "Isolated-frame flux emission outside threshold")
+	c.AddResult(UNKNOWN, "No response from betaform amplifier")
+
+	expected := "CRITICAL"
+	actual := strings.SplitN(c.String(), ":", 2)[0]
+	if actual != expected {
+		t.Errorf("Expected %v status, got %v", expected, actual)
 	}
 }

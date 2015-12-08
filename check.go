@@ -38,7 +38,12 @@ func (c *Check) AddResult(status Status, message string) {
 	result.status = status
 	result.message = message
 	c.results = append(c.results, result)
-	if result.status > c.status {
+
+	if result.status == UNKNOWN {
+		if c.status == OK {
+			c.status = result.status
+		}
+	} else if result.status > c.status {
 		c.status = result.status
 	}
 }
