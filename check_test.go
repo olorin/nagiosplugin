@@ -3,6 +3,7 @@ package nagiosplugin
 import (
 	"fmt"
 	"math/rand"
+	"strings"
 	"testing"
 	"time"
 )
@@ -20,5 +21,32 @@ func TestCheck(t *testing.T) {
 	result := c.String()
 	if expected != result {
 		t.Errorf("Expected check output %v, got check output %v", expected, result)
+	}
+}
+
+func TestDefaultStatusPolicy(t *testing.T) {
+	c := NewCheck()
+	c.AddResult(WARNING, "Isolated-frame flux emission outside threshold")
+	c.AddResult(UNKNOWN, "No response from betaform amplifier")
+
+	expected := "UNKNOWN"
+	actual := strings.SplitN(c.String(), ":", 2)[0]
+	if actual != expected {
+		t.Errorf("Expected %v status, got %v", expected, actual)
+	}
+}
+
+func TestCustomStatusPolicy(t *testing.T) {
+	p, _ := NewStatusPolicy([]Status{OK, UNKNOWN, WARNING, CRITICAL})
+	c := NewCheckWithOptions(CheckOptions{
+		StatusPolicy: p,
+	})
+	c.AddResult(WARNING, "Isolated-frame flux emission outside threshold")
+	c.AddResult(UNKNOWN, "No response from betaform amplifier")
+
+	expected := "WARNING"
+	actual := strings.SplitN(c.String(), ":", 2)[0]
+	if actual != expected {
+		t.Errorf("Expected %v status, got %v", expected, actual)
 	}
 }

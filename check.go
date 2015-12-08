@@ -19,14 +19,46 @@ func Exit(status Status, message string) {
 
 // Represents the state of a Nagios check.
 type Check struct {
-	results  []Result
-	perfdata []PerfDatum
-	status   Status
+	results      []Result
+	perfdata     []PerfDatum
+	status       Status
+	statusPolicy *statusPolicy
+}
+
+// CheckOptions contains knobs that modify default Check behaviour. See
+// NewCheckWithOptions().
+type CheckOptions struct {
+
+	// StatusPolicy defines the relative severity of different check
+	// results by status value.
+	//
+	// A Nagios plugin must ultimately report a single status to its
+	// parent process (OK, CRITICAL, etc.). nagiosplugin allows plugin
+	// developers to batch multiple check results in a single plugin
+	// invocation. The most severe result will be reflected in the
+	// plugin's final exit status. By default, results are prioritised
+	// by the numeric 'plugin return codes' defined by the Nagios Plugin
+	// Development Guidelines. Results with CRITICAL status will take
+	// precedence over WARNING, WARNING over OK, and UNKNOWN over all
+	// other results. This ordering may be tailored with a custom
+	// policy. See NewStatusPolicy().
+	StatusPolicy *statusPolicy
 }
 
 // NewCheck returns an empty Check object.
 func NewCheck() *Check {
 	c := new(Check)
+	c.statusPolicy = NewDefaultStatusPolicy()
+	return c
+}
+
+// NewCheckWithOptions returns an empty Check object with
+// caller-specified behavioural modifications. See CheckOptions.
+func NewCheckWithOptions(options CheckOptions) *Check {
+	c := NewCheck()
+	if options.StatusPolicy != nil {
+		c.statusPolicy = options.StatusPolicy
+	}
 	return c
 }
 
@@ -38,7 +70,8 @@ func (c *Check) AddResult(status Status, message string) {
 	result.status = status
 	result.message = message
 	c.results = append(c.results, result)
-	if result.status > c.status {
+
+	if (*c.statusPolicy)[result.status] > (*c.statusPolicy)[c.status] {
 		c.status = result.status
 	}
 }
