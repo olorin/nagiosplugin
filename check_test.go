@@ -36,10 +36,9 @@ func TestDefaultStatusPolicy(t *testing.T) {
 	}
 }
 
-func TestCustomStatusPolicy(t *testing.T) {
-	p, _ := NewStatusPolicy([]Status{OK, UNKNOWN, WARNING, CRITICAL})
+func TestOUWCStatusPolicy(t *testing.T) {
 	c := NewCheckWithOptions(CheckOptions{
-		StatusPolicy: p,
+		StatusPolicy: NewOUWCStatusPolicy(),
 	})
 	c.AddResult(WARNING, "Isolated-frame flux emission outside threshold")
 	c.AddResult(UNKNOWN, "No response from betaform amplifier")
