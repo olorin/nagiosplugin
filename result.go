@@ -35,6 +35,15 @@ func NewDefaultStatusPolicy() *statusPolicy {
 	}
 }
 
+// NewOUWCStatusPolicy returns a status policy similar to that returned
+// by NewDefaultStatusPolicy with one difference: the UNKNOWN check
+// status is demoted in severity such that any WARNING or CRITICAL check
+// status will take priority.
+func NewOUWCStatusPolicy() *statusPolicy {
+	pol, _ := NewStatusPolicy([]Status{OK, UNKNOWN, WARNING, CRITICAL})
+	return pol
+}
+
 // NewStatusPolicy returns a status policy that assigns relative
 // severity in accordance with a user-configurable prioritised slice.
 // Check statuses must be listed in ascending severity order.

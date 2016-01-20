@@ -41,6 +41,23 @@ func main() {
 }
 ```
 
+In the example above, multiple results were added to the check with `AddResult()`. The final state of the check will be determined by its most severe result. By default, result severity is ordered to match the plugin return codes documented in the [Nagios plugin developer guidelines][guidelines]. A WARNING result is considered more severe than OK, CRITICAL more severe than WARNING, and UNKNOWN most severe of all. A status policy may be used to modify this default behaviour:
+
+```go
+func main() {
+	check := nagiosplugin.NewCheckWithOptions(nagiosplugin.CheckOptions{
+		// OK -> UNKNOWN -> WARNING -> CRITICAL
+		StatusPolicy: nagiosplugin.NewOUWCStatusPolicy(),
+	})
+	defer check.Finish()
+
+	// Now, any WARNING or CRITICAL results added to the check will be
+	// considered more severe than any UNKNOWN result.
+}
+```
+
+[guidelines]: https://nagios-plugins.org/doc/guidelines.html
+
 # Language version
 
 Requires go >= 1.0; tested with versions up to 1.5.
