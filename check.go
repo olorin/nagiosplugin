@@ -10,14 +10,14 @@ const (
 	messageSeparator = ", "
 )
 
-// Standalone Exit function for simple checks without multiple results
+// Exit is a standalone exit function for simple checks without multiple results
 // or perfdata.
 func Exit(status Status, message string) {
 	fmt.Printf("%v: %s\n", status, message)
 	os.Exit(int(status))
 }
 
-// Represents the state of a Nagios check.
+// Check represents the state of a Nagios check.
 type Check struct {
 	results      []Result
 	perfdata     []PerfDatum
@@ -111,7 +111,7 @@ func (c *Check) AddPerfDatum(label, unit string, value float64, thresholds ...fl
 // Returns joined string of (messageSeparator-separated) info text from
 // results which have a status of at least c.status.
 func (c Check) exitInfoText() string {
-	importantMessages := make([]string, 0)
+	var importantMessages []string
 	for _, result := range c.results {
 		if result.status == c.status {
 			importantMessages = append(importantMessages, result.message)

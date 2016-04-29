@@ -19,7 +19,7 @@ type Range struct {
 	AlertOnInside bool
 }
 
-// Returns a new range object and nil if the given range definition was
+// ParseRange returns a new range object and nil if the given range definition was
 // valid, or nil and an error if it was invalid.
 func ParseRange(rangeStr string) (*Range, error) {
 	// Set defaults
@@ -69,24 +69,15 @@ func ParseRange(rangeStr string) (*Range, error) {
 	return t, nil
 }
 
-// Returns true if an alert should be raised based on the range (if the
+// Check returns true if an alert should be raised based on the range (if the
 // value is outside the range for normal semantics, or if the value is
 // inside the range for inverted semantics ('@-semantics')).
 func (r *Range) Check(value float64) bool {
-	var no bool = false
-	var yes bool = true
-
-	if r.AlertOnInside {
-		no = true
-		yes = false
-	}
 	// Ranges are treated as a closed interval.
 	if r.Start <= value && value <= r.End {
-		return no
-	} else {
-		return yes
+		return r.AlertOnInside
 	}
-	return yes
+	return !r.AlertOnInside
 }
 
 // CheckInt is a convenience method which does an unchecked type

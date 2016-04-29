@@ -2,7 +2,7 @@ package nagiosplugin
 
 import "fmt"
 
-// Nagios plugin exit status.
+// Status represents a plugin exit status.
 type Status uint
 
 // https://nagios-plugins.org/doc/guidelines.html#AEN78
@@ -55,7 +55,7 @@ func NewStatusPolicy(statuses []Status) (*statusPolicy, error) {
 
 	// Ensure all statuses are covered by the new policy.
 	defaultPol := NewDefaultStatusPolicy()
-	for status, _ := range *defaultPol {
+	for status := range *defaultPol {
 		_, ok := newPol[status]
 		if !ok {
 			return nil, fmt.Errorf("missing status: %v", status)
