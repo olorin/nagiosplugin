@@ -48,6 +48,7 @@ type CheckOptions struct {
 // NewCheck returns an empty Check object.
 func NewCheck() *Check {
 	c := new(Check)
+	c.status = 3 // initialize as UNKNOWN, 0 (default) is OK
 	c.statusPolicy = NewDefaultStatusPolicy()
 	return c
 }
@@ -71,7 +72,8 @@ func (c *Check) AddResult(status Status, message string) {
 	result.message = message
 	c.results = append(c.results, result)
 
-	if (*c.statusPolicy)[result.status] > (*c.statusPolicy)[c.status] {
+	if (*c.statusPolicy)[result.status] > (*c.statusPolicy)[c.status] ||
+	   c.status == 3 {  // allow trasition from UNKNOWN state to any
 		c.status = result.status
 	}
 }
